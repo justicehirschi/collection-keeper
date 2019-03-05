@@ -48,12 +48,12 @@ var app = new Vue({
     el: "#app",
     data: {
         // Forms
-        showHomeBody: false,
+        showHomeBody: true,
         showAccountBody: false,
         showAboutBody: false,
-        showNavBar: true,
+        showNavBar: false,
         showAccountShopCoinsBody: false,
-        showMyCollectionsWishListBody: true,
+        showMyCollectionsWishListBody: false,
         showAddCoinToWishListForm: false,
         showEditCoinFromWishListForm: false,
         showNavShop: false,
