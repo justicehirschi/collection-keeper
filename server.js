@@ -81,6 +81,6 @@ app.put("/coins/:id", (request, response) => {
     });
 });
 
-app.get("port", () => {
+app.listen(app.get("port"),  function() {
     console.log("Listening...")
 });
