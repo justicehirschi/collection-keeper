@@ -1,0 +1,71 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Coin Collector</title>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header">
+        <button id="sign-in-button">Sign in</button>
+        <div id="collector-cash-total">Collector Cash: $0</div>
+        <h1>Collection Keeper</h1>
+        <button id="home-button" v-on:click="displayHomeBody">Home</button>
+        <button id="account-button" v-on:click="displayAccountBody">Account</button>
+        <button id="about-button">About</button>
+    </div>
+
+    <!-- Home Body -->
+    <div id="home-body" v-show="showHomeBody">
+        <div id="get-started">
+            <h1>Get Started</h1>
+            <p>
+                <strong>Welcome to Collection Keeper!</strong><br>
+                Here you can start your own virtual collection of coins and stamps.
+                You can earn coins and stamps by trading and buying new ones at the shop.
+                To get started, sign up to create a new account. Your account will be completely free!
+                Click the Sign in button or the Account button for more info.
+            </p>
+        </div>
+        <div id="home-collect-coins">
+            <h1>Collect Coins</h1>
+            <img src="coin_images/americanBuffaloCoin2013.png">
+            <img src="coin_images/mercury_dime1918.png">
+            <img src="coin_images/maple_leaf_gold_coin_canada.png">
+        </div>
+        <div id="home-collect-coins-explaination">
+            <h1>How to Collect Coins</h1>
+            <p>
+                Collecting coins to add to your collection is simple.
+                After creating an account you can check the shop to see coins that are avaiable for purchase.
+                At the shop you can sell your coins, buy coins from the bank, or buy coins from other users.
+                You can also trade coins in the shop. To access the shop you must first create a new account.
+            </p>
+        </div>
+        <div id="home-collect-stamps">
+            <h1>Collect Stamps</h1>
+            <img src="stamp_images/us_12cents_postage_stamp.png">
+            <img src="stamp_images/britain_one_penny_postage_stamp.png">
+            <img src="stamp_images/two_cents_postage_stamp.png">
+        </div>
+        <div id="home-collect-stamps-explaination">
+            <h1>How to Collect Stamps</h1>
+            <p>
+                Collecting stamps to add to your collection is simple.
+                After creating an account you can check the shop to see stamps that are avaiable for purchase.
+                At the shop you can sell your stamps, buy stamps from the bank, or buy stamps from other users.
+                You can also trade stamps in the shop. To access the shop you must first create a new account.
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>
+            (c) 2019 Justice Hirschi
+        </p>
+    </footer>
+</body>
+</html>
