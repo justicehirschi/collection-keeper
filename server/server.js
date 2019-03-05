@@ -6,6 +6,9 @@ const cors = require("cors");
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+app.set("port", (process.env.PORT || 8080));
+
+app.use(express.static("public"));
 
 // List all coins
 app.get("/coins", (request, response) => {
@@ -79,6 +82,6 @@ app.put("/coins/:id", (request, response) => {
     });
 });
 
-app.listen(8080, () => {
+app.get(port, () => {
     console.log("Listening...")
 });
