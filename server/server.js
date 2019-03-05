@@ -19,7 +19,6 @@ app.get("/coins", (request, response) => {
 
 // Create a coin
 app.post("/coins", (request, response) => {
-    console.log(request.url);
     console.log("BODY:", request.body);
     
     let coin = new model.Coin({
