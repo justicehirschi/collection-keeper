@@ -1,5 +1,5 @@
 var getCoins = function () {
-    return fetch("http://collection-keeper-jhirschi.herokuapp.com//coins");
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/coins");
 }
 
 var createCoins = function (coin) {
@@ -9,7 +9,7 @@ var createCoins = function (coin) {
     data += `&mint_mark=${encodeURIComponent(coin.mint_mark)}`;
     data += `&material=${encodeURIComponent(coin.material)}`;
 
-    return fetch("http://collection-keeper-jhirschi.herokuapp.com/coins", {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/coins", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -20,7 +20,7 @@ var createCoins = function (coin) {
 
 var deleteCoins = function (coin) {
     if(confirm("Are you sure you want to delete this coin?")) {
-        return fetch("http://collection-keeper-jhirschi.herokuapp.com/coins/" + coin._id, {
+        return fetch("https://collection-keeper-jhirschi.herokuapp.com/coins/" + coin._id, {
             method: "DELETE",
             header: {
                 "Content-type": "application/x-www-form-urlencoded"
@@ -35,7 +35,7 @@ var editCoins = function (coin) {
     data += `&condition=${encodeURIComponent(coin.condition)}`;
     data += `&mint_mark=${encodeURIComponent(coin.mint_mark)}`;
     data += `&material=${encodeURIComponent(coin.material)}`;
-    return fetch("http://collection-keeper-jhirschi.herokuapp.com/coins/" + coin.coin_id, {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/coins/" + coin.coin_id, {
         method: "PUT",
         headers: {
             "Content-type": "application/x-www-form-urlencoded"
