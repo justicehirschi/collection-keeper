@@ -1,3 +1,8 @@
+Server: https://collection-keeper-jhirschi.herokuapp.com
+------------------
+Client: https://jhirschi123.github.io/
+------------------
+
 ## Resource: Coins
 ------------------
 ## Attributes
