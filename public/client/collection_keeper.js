@@ -79,10 +79,7 @@ var createSession = function (email, plainPassword) {
 var deleteSession = function() {
     return fetch("https://collection-keeper-jhirschi.herokuapp.com/logout", {
         method: "DELETE",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        credentials: "include",
+        credentials: "include"
     });
 };
 
@@ -177,6 +174,7 @@ var app = new Vue({
                 if(response.status == 200) {
                     this.showAccountBody = true;
                     this.showNavBar = true;
+                    this.sign_in_status = "Logout";
                 } else {
                     this.showSignInBody = true;
                 }
@@ -238,6 +236,15 @@ var app = new Vue({
         addCollectorCash: function() {
             this.collector_cash += Number(this.add_collector_cash);
             this.add_collector_cash = "";
+        },
+        checkLoginStatus: function() {
+            getSession().then(response => {
+                if(response.status == 200) {
+                    this.sign_in_status = "Logout";
+                } else {
+                    this.sign_in_status = "Sign in";
+                }
+            });
         },
 
         // Create/Delete/Edit coins
@@ -392,6 +399,7 @@ var app = new Vue({
                 if(response.status == 201) {
                     console.log("Logged In!")
                     this.displayAccountBody();
+                    this.sign_in_status = "Logout";
                 } else {
                     console.log("Problem signing in.")
                     this.errors.push("Email or password was incorrect");
@@ -402,18 +410,15 @@ var app = new Vue({
             this.signInPassword = "";
         },
         logout: function() {
-            if(this.sign_in_status == "Sign in") {
-                return;
-            } else {
-                deleteSession().then(function(request, response) {
-                    if(response.status == 200) {
-                        displaySignInBody();
-                    } else {
-                        return;
-                    }
-                });
-            }
+            deleteSession().then(response => {
+                this.displaySignInBody();
+            });
+
+            this.sign_in_status = "Sign in"
         }
     }
 });
 
+window.onload = function() {
+    app.checkLoginStatus();
+};
