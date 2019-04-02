@@ -8,7 +8,7 @@ const session = require("express-session");
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors({credentials: true, origin: "null"})); // only set origin null if it's on local host. When deploying change it collection-keeper.github.io
+app.use(cors({credentials: true, origin: "jhirschi123.github.io"})); // only set origin null if it's on local host. When deploying change it collection-keeper.github.io
 app.set("port", (process.env.PORT || 8080));
 app.use(express.static("public"));
 
