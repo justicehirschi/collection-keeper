@@ -239,15 +239,6 @@ var app = new Vue({
             this.collector_cash += Number(this.add_collector_cash);
             this.add_collector_cash = "";
         },
-        changeSignInStatus: function() {
-            getSession().then(response => {
-                if(response.status == 200) {
-                    this.sign_in_status = "Logout";
-                } else {
-                    this.sign_in_status = "Sign in";
-                }
-            });
-        },
 
         // Create/Delete/Edit coins
 

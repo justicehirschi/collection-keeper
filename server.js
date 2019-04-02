@@ -8,7 +8,7 @@ const session = require("express-session");
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors({credentials: true, origin: "https://jhirschi123.github.io"})); // only set origin null if it's on local host. When deploying change it to the client address jhirschi123.github.io
+app.use(cors({credentials: true, origin: "null"})); // https://jhirschi123.github.io
 app.set("port", (process.env.PORT || 8080));
 app.use(express.static("public"));
 
