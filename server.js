@@ -68,6 +68,13 @@ app.post("/session", passport.authenticate("local"), function(request, response)
     response.sendStatus(201);
 });
 
+app.delete("/logout", function(request, response) {
+    if(request.user) {
+        request.logout();
+    }
+    response.sendStatus(200);
+});
+
 // Create a user
 
 app.post("/users", (request, response) => {

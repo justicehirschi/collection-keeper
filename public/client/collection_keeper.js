@@ -52,6 +52,16 @@ var editCoins = function (coin) {
 
 // Session
 
+var getSession = function() {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/session", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        credentials: "include"
+    });
+};
+
 var createSession = function (email, plainPassword) {
     var data = `email=${encodeURIComponent(email)}`;
     data += `&plainPassword=${encodeURIComponent(plainPassword)}`;
@@ -63,6 +73,16 @@ var createSession = function (email, plainPassword) {
         },
         credentials: "include",
         body: data
+    });
+};
+
+var deleteSession = function() {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/logout", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        credentials: "include",
     });
 };
 
@@ -121,6 +141,7 @@ var app = new Vue({
         password: "",
         user_id: "",
         users: [],
+        sign_in_status: "Sign in",
 
         // errors
         errors: [],
@@ -152,7 +173,14 @@ var app = new Vue({
         },
         displaySignInBody: function() {
             this.hideAllForms();
-            this.showSignInBody = true;
+            getSession().then(response => {
+                if(response.status == 200) {
+                    this.showAccountBody = true;
+                    this.showNavBar = true;
+                } else {
+                    this.showSignInBody = true;
+                }
+            });
         },
         displaySignUpBody: function() {
             this.hideAllForms();
@@ -210,6 +238,15 @@ var app = new Vue({
         addCollectorCash: function() {
             this.collector_cash += Number(this.add_collector_cash);
             this.add_collector_cash = "";
+        },
+        changeSignInStatus: function() {
+            getSession().then(response => {
+                if(response.status == 200) {
+                    this.sign_in_status = "Logout";
+                } else {
+                    this.sign_in_status = "Sign in";
+                }
+            });
         },
 
         // Create/Delete/Edit coins
@@ -372,6 +409,19 @@ var app = new Vue({
 
             this.signInEmail = "";
             this.signInPassword = "";
+        },
+        logout: function() {
+            if(this.sign_in_status == "Sign in") {
+                return;
+            } else {
+                deleteSession().then(function(request, response) {
+                    if(response.status == 200) {
+                        displaySignInBody();
+                    } else {
+                        return;
+                    }
+                });
+            }
         }
     }
 });
