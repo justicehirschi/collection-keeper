@@ -1,0 +1,285 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Coin Collector</title>
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <div id="header">
+            <button id="sign-in-button" v-on:click="displayAccountBody">Sign in</button>
+            <div id="collector-cash-total">Collector Cash: ${{collector_cash}}</div>
+            <h1>Collection Keeper</h1>
+            <button id="home-button" v-on:click="displayHomeBody">Home</button>
+            <button id="account-button" v-on:click="displaySignInBody">Account</button>
+            <button id="about-button" v-on:click="displayAboutBody">About</button>
+        </div>
+
+        <!-- Nav Bar -->
+        <div id="nav-bar" v-show="showNavBar">
+                <button id="shop-button" v-on:click="displayNavShop">Shop</button>
+                    <ul id="shop-dropdown" v-show="showNavShop">
+                        <li>
+                            <button v-on:click="displayAccountShopCoinsBody">Coins</button>
+                        </li>
+                        <li>
+                            <button>Stamps</button>
+                        </li>
+                        <li>
+                            <button>Trade</button>
+                        </li>
+                        <li>
+                            <button>Sell</button>
+                        </li>
+                    </ul>
+                <button id="my-collections-button" v-on:click="displayNavMyCollections">My Collections</button>
+                    <ul id="my-collections-dropdown" v-show="showNavMyCollections">
+                        <li>
+                            <button>Coins</button>
+                        </li>
+                        <li>
+                            <button>Stamps</button>
+                        </li>
+                        <li>
+                            <button v-on:click="displayMyCollectionsWishListBody">Wish List</button>
+                        </li>
+                    </ul>
+                <button id="get-money-button" v-on:click="displayGetMoneyBody">Get$$</button>
+            </div>
+
+        <!-- Home Body -->
+        <div id="home-body" v-show="showHomeBody">
+            <div id="get-started">
+                <h1>Get Started</h1>
+                <p>
+                    <strong>Welcome to Collection Keeper!</strong><br>
+                    Here you can start your own virtual collection of coins and stamps.
+                    You can earn coins and stamps by trading and buying new ones at the shop.
+                    To get started, sign up to create a new account. Your account will be completely free!
+                    Click the Sign in button or the Account button for more info.
+                </p>
+            </div>
+            <div id="home-collect-coins">
+                <h1>Collect Coins</h1>
+                <img src="coin_images/americanBuffaloCoin2013.png">
+                <img src="coin_images/mercury_dime1918.png">
+                <img src="coin_images/maple_leaf_gold_coin_canada.png">
+            </div>
+            <div id="home-collect-coins-explaination">
+                <h1>How to Collect Coins</h1>
+                <p>
+                    Collecting coins to add to your collection is simple.
+                    After creating an account you can check the shop to see coins that are avaiable for purchase.
+                    At the shop you can sell your coins, buy coins from the bank, or buy coins from other users.
+                    You can also trade coins in the shop. To access the shop you must first create a new account.
+                </p>
+            </div>
+            <div id="home-collect-stamps">
+                <h1>Collect Stamps</h1>
+                <img src="stamp_images/us_12cents_postage_stamp.png">
+                <img src="stamp_images/britain_one_penny_postage_stamp.png">
+                <img src="stamp_images/two_cents_postage_stamp.png">
+            </div>
+            <div id="home-collect-stamps-explaination">
+                <h1>How to Collect Stamps</h1>
+                <p>
+                    Collecting stamps to add to your collection is simple.
+                    After creating an account you can check the shop to see stamps that are avaiable for purchase.
+                    At the shop you can sell your stamps, buy stamps from the bank, or buy stamps from other users.
+                    You can also trade stamps in the shop. To access the shop you must first create a new account.
+                </p>
+            </div>
+        </div>
+
+        <!-- Sign in Body -->
+        <div id="sign-in-body" v-show="showSignInBody">
+            <div id="sign-in-form">
+                <h1>Sign In</h1>
+                <label>Email:</label>
+                <input id="email-sign-in-field" v-model="signInEmail"><br><br>
+                <label>Password:</label>
+                <input id="password-sign-in-field" v-model="signInPassword"><br><br>
+                <button id="sign-in-account-button" v-on:click="signIn">Sign In</button>
+                <p style="color: green;" v-show="showAccountCreated">Account Created!</p>
+                <p>Don't have an account?</p>
+                <button id="sign-up-button" v-on:click="displaySignUpBody">Sign Up</button>
+                <div>
+                    <ul class="errors">
+                        <li v-for="(error, index) in errors">
+                            {{error}}<br><br>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sign up Body -->
+        <div id="sign-up-body" v-show="showSignUpBody">
+            <div id="sign-up-form">
+                <button id="close-sign-up-form-button" v-on:click="displaySignInBody">X</button>
+                <h1>Sign Up</h1>
+                <label>First Name:</label>
+                <input id="first-name-sign-up-field" v-model="firstName"><br><br>
+                <label>Last Name:</label>
+                <input id="last-name-sign-up-field" v-model="lastName"><br><br>
+                <label>Email:</label>
+                <input id="email-sign-up-field" v-model="email"><br><br>
+                <label>Password:</label>
+                <input id="password-sign-up-field" v-model="password"><br><br>
+                <button id="registration-button" v-on:click="addUser">Register Account</button>
+                <div>
+                    <ul class="errors">
+                        <li v-for="(error, index) in errors">
+                            {{error}}<br><br>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account Body -->
+        <div id="account-body" v-show="showAccountBody">
+            <div id="user-description">
+                <button id="edit-user-button">Edit</button>
+                <h1>Username</h1>
+                <label>Email:</label>
+            </div>
+            <div id="account-collect-daily-item">
+                <h1>Collect Daily</h1>
+                <button id="collect-daily-coin-button">Coin</button>
+                <button id="collect-daily-stamp-button">Stamp</button>
+            </div>
+            <div id="your-rankings">
+                <h1>Your Rankings</h1>
+                <label>Most Coins:</label><br><br>
+                <label>Most Valuable Coin Collection:</label><br><br>
+                <label>Most Stamps:</label><br><br>
+                <label>Most Valuable Stamp Collection:</label>
+            </div>
+        </div>
+
+        <!-- About Body -->
+        <div id="about-body" v-show="showAboutBody">
+            <div id="about-collection-keeper">
+                <h1>About Collection Keeper</h1>
+                <p>
+                    <strong>What is Collection Keeper?</strong><br>
+                    Collection Keeper is a virtual 
+                    collection of coins and stamps for each user.
+                    Anyone can sign up for free and can 
+                    start collectiong coins and stamps online.
+                    The coins and stamps you collect are not real objects, 
+                    but it makes a fun online hobby.
+                    Through Collection Keeper you can interact with different 
+                    users from around the world who are all collecting 
+                    coins and stamps just like you.
+                </p>
+            </div>
+            <div id="created-by">
+                <h1>Created By</h1>
+                <p><strong>Justice Hirschi</strong></p>
+            </div>
+        </div>
+
+        <!-- Account/Shop/Coins Body -->
+        <div id="account-shop-coins-body" v-show="showAccountShopCoinsBody">
+            <div id="coin-categories">
+                <h1>Categories:</h1>
+            </div>
+        </div> 
+        
+        <!-- My Collections/Wish List Body -->
+        <div id="my-collections-wish-list-body" v-show="showMyCollectionsWishListBody">
+            <div id="wish-list">
+                <h1>My Coin Wish List:</h1>
+                <button id="add-coin-to-wish-list-button" v-on:click="displayAddCoinToWishListForm">Add New Coin</button>
+                <ul id="wish-list-coins">
+                    <li v-for="(coin, index) in coins">
+                        <button id="wish-list-coin-buttons">{{coin.type}}<br>{{coin.date}}<br>{{coin.mint_mark}}</button>
+                        <button id="delete-wish-list-coin-button" v-on:click="deleteCoinFromWishList(coin)">X</button>
+                        <button id="edit-wish-list-coin-button" v-on:click="displayEditCoinFromWishListForm(coin)">Edit</button>
+                    </li>
+                </ul>
+                <p></p>
+            </div>
+        </div>
+
+        <!-- Add Coins to Wish List Form -->
+        <div id="add-coin-to-wish-list" v-show="showAddCoinToWishListForm">
+            <button id="close-add-coin-to-wish-list" v-on:click="displayMyCollectionsWishListBody">X</button>
+            <h1>Add a coin to your Wish List</h1>
+            <div id="add-coin-to-wish-list-form">
+                <label>Date:</label><br>
+                <input id="date-wish-list-input" v-model="date"><br><br>
+                <label>Type:</label><br>
+                <input id="type-wish-list-input" v-model="type"><br><br>
+                <label>Condition:</label><br>
+                <input id="condition-wish-list-input" v-model="condition"><br><br>
+                <label>Mint Mark:</label><br>
+                <input id="mint_mark-wish-list-input" v-model="mint_mark"><br><br>
+                <label>Material:</label><br>
+                <input id="material-wish-list-input" v-model="material"><br><br>
+                <button id="submit-coin-to-wish-list-button" v-on:click="addCoinToWishList">Add Coin</button>
+            </div><br>
+            <div>
+                <ul class="errors">
+                    <li v-for="(error, index) in errors">
+                        {{error}}<br><br>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Edit Coins from Wish List Form -->
+        <div id="edit-coin-from-wish-list" v-show="showEditCoinFromWishListForm">
+            <button id="close-edit-coin-from-wish-list" v-on:click="displayMyCollectionsWishListBody">X</button>
+            <h1>Edit Coin</h1>
+            <div id="edit-coin-from-wish-list-form">
+                <label>Date:</label><br>
+                <input id="edit-date-wish-list-input" v-model="date"><br><br>
+                <label>Type:</label><br>
+                <input id="edit-type-wish-list-input" v-model="type"><br><br>
+                <label>Condition:</label><br>
+                <input id="edit-condition-wish-list-input" v-model="condition"><br><br>
+                <label>Mint Mark:</label><br>
+                <input id="edit-mint_mark-wish-list-input" v-model="mint_mark"><br><br>
+                <label>Material:</label><br>
+                <input id="edit-material-wish-list-input" v-model="material"><br><br>
+                <button id="submit-edit-coin-from-wish-list-button" v-on:click="editCoinFromWishList">Submit Changes</button>
+            </div><br>
+            <div>
+                <ul class="errors">
+                    <li v-for="(error, index) in errors">
+                        {{error}}<br><br>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Get$$ -->
+        <div id="get-money-body" v-show="showGetMoneyBody">
+            <div id="get-money">
+                <h1>Buy Collector Cash:</h1>
+                <p>Use Collector Cash to buy coins and stamps</p>
+                <p>$1.00 = 100 Collector Cash</p><br>
+                <p>Input amount of collector cash you want to buy</p>
+                <input id="collector-cash-input" v-model="add_collector_cash">
+                <p style="display: inline;">= ${{add_collector_cash * .01}} of your money</p><br><br>
+                <button id="add-collector-cash-button" v-on:click="addCollectorCash">Exchange Cash</button>
+            </div>
+        </div> 
+
+        <!-- Footer -->
+        <footer>
+            <p>
+                (c) 2019 Justice Hirschi
+            </p>
+        </footer>
+    </div>
+    <script src="vue.js"></script>
+    <script src="collection_keeper.js"></script>
+</body>
+</html>
