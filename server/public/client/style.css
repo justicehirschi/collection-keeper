@@ -7,6 +7,10 @@ body button {
     cursor: pointer;
 }
 
+.errors li {
+    color: red;
+}
+
 /* Header */
 #header {
     width: 100%;
@@ -119,7 +123,7 @@ body button {
 
 #get-started, #home-collect-coins-explaination, #home-collect-stamps-explaination,
 #user-description, #coin-categories, #wish-list, #add-coin-to-wish-list,
-#edit-coin-from-wish-list, #get-money {
+#edit-coin-from-wish-list, #get-money, #sign-in-form, #sign-up-form {
     width: 60%;
     margin: auto;
     padding: 0px 0px 50px 0px;
@@ -131,7 +135,7 @@ body button {
 
 #get-started h1, #home-collect-coins-explaination h1, #home-collect-stamps-explaination h1,
 #account-body h1, #coin-categories h1, #wish-list h1, #add-coin-to-wish-list h1,
-#edit-coin-from-wish-list h1, #get-money h1 {
+#edit-coin-from-wish-list h1, #get-money h1, #sign-in-form h1, #sign-up-form h1 {
     text-decoration: underline;
     color: #ffffff;
     margin: 0px;
@@ -157,6 +161,49 @@ body button {
     padding: 0px 120px;
     margin: 0px 0px 20px 0px;
 }
+
+/* Sign in body */
+
+#sign-in-form, #sign-up-form {
+    color: #eae7dc;
+    font-size: 30px;
+}
+
+#sign-in-form input, #sign-up-form input {
+    color: #8cbfcf;
+    font-size: 25px;
+}
+
+#sign-in-account-button {
+    font-size: 25px;
+    padding: 10px;
+    border-radius: 15px;
+    color: #eae7dc;
+    background-color: #8e8d8a;
+    border: 3px solid #8e8d8a;
+}
+
+#sign-in-account-button:hover {
+    color: #8e8d8a;
+    background-color: #eae7dc;
+    border: 3px solid #eae7dc;
+}
+
+#sign-up-button, #registration-button {
+    color: #eae7dc;
+    background-color: #8cbfcf;
+    border: 3px solid #eae7dc;
+    font-size: 25px;
+}
+
+#sign-up-button:hover, #registration-button:hover {
+    color: #8cbfcf;
+    background-color: #eae7dc;
+    border: 3px solid #8cbfcf;
+}
+
+/* Sign Up Body */
+
 
 /* Account Body */
 
@@ -344,7 +391,8 @@ body button {
     padding: 20px 20px 30px 20px;
 }
 
-#close-add-coin-to-wish-list, #close-edit-coin-from-wish-list {
+#close-add-coin-to-wish-list, #close-edit-coin-from-wish-list,
+#close-sign-up-form-button {
     color: #8e8d8a;
     background-color: #eae7dc;
     font-size: 30px;

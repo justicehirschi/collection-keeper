@@ -1,5 +1,8 @@
+// Coins
 var getCoins = function () {
-    return fetch("https://collection-keeper-jhirschi.herokuapp.com/coins");
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/coins", {
+        credentials: "include"
+    });
 }
 
 var createCoins = function (coin) {
@@ -14,6 +17,7 @@ var createCoins = function (coin) {
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
+        credentials: "include",
         body: data
     });
 };
@@ -24,7 +28,8 @@ var deleteCoins = function (coin) {
             method: "DELETE",
             header: {
                 "Content-type": "application/x-www-form-urlencoded"
-            }
+            },
+            credentials: "include",
         });
     }
 };
@@ -40,6 +45,41 @@ var editCoins = function (coin) {
         headers: {
             "Content-type": "application/x-www-form-urlencoded"
         },
+        credentials: "include",
+        body: data
+    });
+};
+
+// Session
+
+var createSession = function (email, plainPassword) {
+    var data = `email=${encodeURIComponent(email)}`;
+    data += `&plainPassword=${encodeURIComponent(plainPassword)}`;
+
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/session", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        credentials: "include",
+        body: data
+    });
+};
+
+// Users
+
+var createUsers = function (user) {
+    var data = `firstName=${encodeURIComponent(user.firstName)}`;
+    data += `&lastName=${encodeURIComponent(user.lastName)}`;
+    data += `&email=${encodeURIComponent(user.email)}`;
+    data += `&password=${encodeURIComponent(user.password)}`;
+
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/users", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        credentials: "include",
         body: data
     });
 };
@@ -49,6 +89,9 @@ var app = new Vue({
     data: {
         // Forms
         showHomeBody: true,
+        showSignInBody: false,
+        showSignUpBody: false,
+        showAccountCreated: false,
         showAccountBody: false,
         showAboutBody: false,
         showNavBar: false,
@@ -60,6 +103,7 @@ var app = new Vue({
         showNavMyCollections: false,
         showGetMoneyBody: false,
 
+        // coins
         date: "" ,
         type: "",
         condition: "",
@@ -67,6 +111,18 @@ var app = new Vue({
         material: "",
         coin_id: "",
         coins: [],
+
+        // users
+        signInEmail: "",
+        signInPassword: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        user_id: "",
+        users: [],
+
+        // errors
         errors: [],
         collector_cash: 0,
         add_collector_cash: ""
@@ -75,6 +131,9 @@ var app = new Vue({
         // Form Methods
         hideAllForms: function () {
             this.showHomeBody = false;
+            this.showSignInBody = false;
+            this.showSignUpBody = false;
+            this.showAccountCreated = false;
             this.showAccountBody = false;
             this.showAboutBody = false;
             this.showNavBar = false;
@@ -90,6 +149,14 @@ var app = new Vue({
         displayHomeBody: function() {
             this.hideAllForms();
             this.showHomeBody = true;
+        },
+        displaySignInBody: function() {
+            this.hideAllForms();
+            this.showSignInBody = true;
+        },
+        displaySignUpBody: function() {
+            this.hideAllForms();
+            this.showSignUpBody = true;
         },
         displayAccountBody: function() {
             this.hideAllForms()
@@ -240,6 +307,71 @@ var app = new Vue({
         },
         created: function() {
             this.loadCoins();
+        },
+
+        // Users
+        validateUser: function() {
+            this.errors = [];
+            if(this.firstName == "") {
+                this.errors.push("You must add a first name");
+            } 
+            if(this.lastName == "") {
+                this.errors.push("You must add a last name");
+            }
+            if(this.email == "") {
+                this.errors.push("You must add an email");
+            }
+            if(this.password == "") {
+                this.errors.push("You must add a password");
+            }
+            console.log(this.errors);
+        },
+        addUser: function() {
+            this.validateUser();
+            if(this.errors.length > 0) {
+                return;
+            }
+            createUsers({
+                firstName: this.firstName,
+                lastName: this.lastName,
+                email: this.email,
+                password: this.password
+            }).then(response => {
+                if(response.status == 201) {
+                    console.log("User Created!")
+                    this.displaySignInBody();
+                    this.showAccountCreated = true;
+                } else if(response.status == 422) {
+                    console.log("Email already in use.")
+                    this.errors = [];
+                    this.errors.push("That email is already in use.");
+                }
+            });
+            this.firstName = "";
+            this.lastName = "";
+            this.email = "";
+            this.password = "";
+        },
+        signIn: function() {
+            this.errors = [];
+            if(this.signInEmail == "") {
+                this.errors.push("You must add an email");
+            }
+            if(this.signInPassword == "") {
+                this.errors.push("You must add a password");
+            }
+            createSession(this.signInEmail, this.signInPassword).then(response => {
+                if(response.status == 201) {
+                    console.log("Logged In!")
+                    this.displayAccountBody();
+                } else {
+                    console.log("Problem signing in.")
+                    this.errors.push("Email or password was incorrect");
+                }
+            });;
+
+            this.signInEmail = "";
+            this.signInPassword = "";
         }
     }
 });

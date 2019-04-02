@@ -14,7 +14,7 @@
             <div id="collector-cash-total">Collector Cash: ${{collector_cash}}</div>
             <h1>Collection Keeper</h1>
             <button id="home-button" v-on:click="displayHomeBody">Home</button>
-            <button id="account-button" v-on:click="displayAccountBody">Account</button>
+            <button id="account-button" v-on:click="displaySignInBody">Account</button>
             <button id="about-button" v-on:click="displayAboutBody">About</button>
         </div>
 
@@ -91,6 +91,52 @@
                     At the shop you can sell your stamps, buy stamps from the bank, or buy stamps from other users.
                     You can also trade stamps in the shop. To access the shop you must first create a new account.
                 </p>
+            </div>
+        </div>
+
+        <!-- Sign in Body -->
+        <div id="sign-in-body" v-show="showSignInBody">
+            <div id="sign-in-form">
+                <h1>Sign In</h1>
+                <label>Email:</label>
+                <input id="email-sign-in-field" v-model="signInEmail"><br><br>
+                <label>Password:</label>
+                <input id="password-sign-in-field" v-model="signInPassword"><br><br>
+                <button id="sign-in-account-button" v-on:click="signIn">Sign In</button>
+                <p style="color: green;" v-show="showAccountCreated">Account Created!</p>
+                <p>Don't have an account?</p>
+                <button id="sign-up-button" v-on:click="displaySignUpBody">Sign Up</button>
+                <div>
+                    <ul class="errors">
+                        <li v-for="(error, index) in errors">
+                            {{error}}<br><br>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sign up Body -->
+        <div id="sign-up-body" v-show="showSignUpBody">
+            <div id="sign-up-form">
+                <button id="close-sign-up-form-button" v-on:click="displaySignInBody">X</button>
+                <h1>Sign Up</h1>
+                <label>First Name:</label>
+                <input id="first-name-sign-up-field" v-model="firstName"><br><br>
+                <label>Last Name:</label>
+                <input id="last-name-sign-up-field" v-model="lastName"><br><br>
+                <label>Email:</label>
+                <input id="email-sign-up-field" v-model="email"><br><br>
+                <label>Password:</label>
+                <input id="password-sign-up-field" v-model="password"><br><br>
+                <button id="registration-button" v-on:click="addUser">Register Account</button>
+                <div>
+                    <ul class="errors">
+                        <li v-for="(error, index) in errors">
+                            {{error}}<br><br>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
