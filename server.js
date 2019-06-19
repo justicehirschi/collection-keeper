@@ -8,7 +8,7 @@ const session = require("express-session");
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors({credentials: true, origin: "https://jhirschi123.github.io"})); // https://jhirschi123.github.io
+app.use(cors({credentials: true, origin: "null"})); // https://jhirschi123.github.io if on server
 app.set("port", (process.env.PORT || 8080));
 app.use(express.static("public"));
 
@@ -75,11 +75,29 @@ app.delete("/logout", function(request, response) {
     response.sendStatus(200);
 });
 
+// Get username
+
+app.get("/users/name", (request, response) => {
+    if (!request.user) {
+        response.sendStatus(401);
+        return;
+    }
+    response.json(request.user.firstName);
+});
+
+// Get user email
+
+app.get("/users/email", (request, response) => {
+    if (!request.user) {
+        response.sendStatus(401);
+        return;
+    }
+    response.json(request.user.email);
+});
+
 // Create a user
 
 app.post("/users", (request, response) => {
-    console.log("BODY:", request.body);
-
     let user = new model.User({
         firstName: request.body.firstName,
         lastName: request.body.lastName,
@@ -112,25 +130,24 @@ app.post("/users", (request, response) => {
 
 // List all coins
 app.get("/coins", (request, response) => {
-    if(!request.user) {
+    if (!request.user) {
         response.sendStatus(401);
         return;
     }
-    model.Coin.find({user: request.user._id}).then(function(coins) {
+    model.Coin.find({
+        user: request.user._id
+    }).then(function (coins) {
         response.json(coins);
     });
 });
 
 // Create a coin
 app.post("/coins", (request, response) => {
-    // console.log(request.user);
-    if(!request.user) {
+    if (!request.user) {
         response.sendStatus(401);
         return;
     }
 
-    console.log("BODY:", request.body);
-    
     let coin = new model.Coin({
         date: request.body.date,
         type: request.body.type,
@@ -140,7 +157,68 @@ app.post("/coins", (request, response) => {
         user: request.user._id
     });
 
-    coin.save().then(function() {
+    coin.save().then(function () {
+        response.sendStatus(201);
+    }, function (err) {
+        if (err.errors) {
+            var messages = {};
+            for (var e in err.errors) {
+                messages[e] = err.errors[e].message;
+            }
+
+            console.log("Error Saving Coin.", messages);
+            response.status(422).json(messages);
+        } else {
+            console.log("Unexpected Error Saving Coin.")
+            response.sendStatus(500);
+        }
+    });
+});
+
+// Delete a coin
+app.delete("/coins/:id", (request, response) => {
+    model.Coin.findOne({
+        _id: request.params.id
+    }).then(function (coin) {
+        if (coin) {
+            coin.delete().then(function () {
+                console.log("Coin with id:", request.params.id, "deleted.")
+                response.json(coin);
+            });
+        } else {
+            response.sendStatus(404);
+        }
+    });
+});
+
+// List all wish list coins
+app.get("/wish_list_coins", (request, response) => {
+    if(!request.user) {
+        response.sendStatus(401);
+        return;
+    }
+    model.WishListCoin.find({user: request.user._id}).then(function(coins) {
+        response.json(coins);
+    });
+});
+
+// Create a wish list coin
+app.post("/wish_list_coins", (request, response) => {
+    if(!request.user) {
+        response.sendStatus(401);
+        return;
+    }
+
+    let wish_list_coin = new model.WishListCoin({
+        date: request.body.date,
+        type: request.body.type,
+        condition: request.body.condition,
+        mint_mark: request.body.mint_mark,
+        material: request.body.material,
+        user: request.user._id
+    });
+
+    wish_list_coin.save().then(function() {
         response.sendStatus(201);
     }, function(err) {
         if(err.errors) {
@@ -158,9 +236,9 @@ app.post("/coins", (request, response) => {
     });
 });
 
-// Delete a coin
-app.delete("/coins/:id", (request, response) => {
-    model.Coin.findOne({ _id: request.params.id }).then(function (coin) {
+// Delete a wish list coin
+app.delete("/wish_list_coins/:id", (request, response) => {
+    model.WishListCoin.findOne({ _id: request.params.id }).then(function (coin) {
         if (coin) {
             coin.delete().then(function () {
                 console.log("Coin with id:", request.params.id, "deleted.")
@@ -172,9 +250,9 @@ app.delete("/coins/:id", (request, response) => {
     });
 });
 
-// Edit a coin
-app.put("/coins/:id", (request, response) => {
-    model.Coin.findOne({ _id: request.params.id }).then(function (coin) {
+// Edit a wish list coin
+app.put("/wish_list_coins/:id", (request, response) => {
+    model.WishListCoin.findOne({ _id: request.params.id }).then(function (coin) {
         if (coin) {
             coin.date = request.body.date;
             coin.type = request.body.type;

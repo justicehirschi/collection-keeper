@@ -8,6 +8,33 @@ mongoose.set("useCreateIndex", true);
 
 const coinSchema = new mongoose.Schema({
     date: {
+        type: Number,
+        required: [true, "All coins must have a date."]
+    },
+    type: {
+        type: String,
+        required: [true, "All coins must have a type."]
+    },
+    condition: {
+        type: String,
+        required: [true, "All Coins must have a condition."]
+    },
+    mint_mark: {
+        type: String,
+        required: [true, "All Coins must have a mint mark."]
+    },
+    material: {
+        type: String,
+        required: [true, "All Coins must have a material."]
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }
+});
+
+const wishListCoinSchema = new mongoose.Schema({
+    date: {
          type: Number,
          required: [true, "All coins must have a date."]
     },
@@ -66,10 +93,12 @@ userSchema.methods.verifyEncryptedPassword = function(plainPassword, callBackFun
     });
 };
 
+const WishListCoin = mongoose.model('WishListCoin', wishListCoinSchema);
 const Coin = mongoose.model('Coin', coinSchema);
 const User = mongoose.model('User', userSchema);
 
 module.exports = {
+    WishListCoin: WishListCoin,
     Coin: Coin,
     User: User
 };
