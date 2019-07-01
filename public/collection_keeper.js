@@ -2,7 +2,7 @@
 
 // My Coins
 var getCoins = function () {
-    return fetch("http://localhost:8080/coins", {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/coins", {
         method: "GET",
         credentials: "include"
     });
@@ -15,7 +15,7 @@ var createCoins = function (coin) {
     data += `&mint_mark=${encodeURIComponent(coin.mint_mark)}`;
     data += `&material=${encodeURIComponent(coin.material)}`;
 
-    return fetch("http://localhost:8080/coins", {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/coins", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -27,7 +27,7 @@ var createCoins = function (coin) {
 
 var deleteCoins = function (coin) {
     if (confirm("Are you sure you want to delete this coin?")) {
-        return fetch("http://localhost:8080/coins/" + coin._id, {
+        return fetch("https://collection-keeper-jhirschi.herokuapp.com/coins/" + coin._id, {
             method: "DELETE",
             header: {
                 "Content-type": "application/x-www-form-urlencoded"
@@ -39,7 +39,7 @@ var deleteCoins = function (coin) {
 
 // Wish List Coins
 var getWishListCoins = function () {
-    return fetch("http://localhost:8080/wish_list_coins", {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/wish_list_coins", {
         method: "GET",
         credentials: "include"
     });
@@ -52,7 +52,7 @@ var createWishListCoins = function (coin) {
     data += `&mint_mark=${encodeURIComponent(coin.mint_mark)}`;
     data += `&material=${encodeURIComponent(coin.material)}`;
 
-    return fetch("http://localhost:8080/wish_list_coins", {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/wish_list_coins", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -64,7 +64,7 @@ var createWishListCoins = function (coin) {
 
 var deleteWishListCoins = function (coin) {
     if(confirm("Are you sure you want to delete this coin?")) {
-        return fetch("http://localhost:8080/wish_list_coins/" + coin._id, {
+        return fetch("https://collection-keeper-jhirschi.herokuapp.com/wish_list_coins/" + coin._id, {
             method: "DELETE",
             header: {
                 "Content-type": "application/x-www-form-urlencoded"
@@ -80,7 +80,7 @@ var editWishListCoins = function (coin) {
     data += `&condition=${encodeURIComponent(coin.condition)}`;
     data += `&mint_mark=${encodeURIComponent(coin.mint_mark)}`;
     data += `&material=${encodeURIComponent(coin.material)}`;
-    return fetch("http://localhost:8080/wish_list_coins/" + coin.coin_id, {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/wish_list_coins/" + coin.coin_id, {
         method: "PUT",
         headers: {
             "Content-type": "application/x-www-form-urlencoded"
@@ -93,7 +93,7 @@ var editWishListCoins = function (coin) {
 // Session
 
 var getSession = function() {
-    return fetch("http://localhost:8080/session", {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/session", {
         method: "GET",
         credentials: "include"
     });
@@ -103,7 +103,7 @@ var createSession = function (email, plainPassword) {
     var data = `email=${encodeURIComponent(email)}`;
     data += `&plainPassword=${encodeURIComponent(plainPassword)}`;
 
-    return fetch("http://localhost:8080/session", {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/session", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -114,7 +114,7 @@ var createSession = function (email, plainPassword) {
 };
 
 var deleteSession = function() {
-    return fetch("http://localhost:8080/logout", {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/logout", {
         method: "DELETE",
         credentials: "include"
     });
@@ -123,14 +123,14 @@ var deleteSession = function() {
 // Users
 
 var getUserName = function() {
-    return fetch("http://localhost:8080/users/name", {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/users/name", {
         method: "GET",
         credentials: "include",
    });
 };
 
 var getUserEmail = function () {
-    return fetch("http://localhost:8080/users/email", {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/users/email", {
         method: "GET",
         credentials: "include",
     });
@@ -142,7 +142,7 @@ var createUsers = function (user) {
     data += `&email=${encodeURIComponent(user.email)}`;
     data += `&password=${encodeURIComponent(user.password)}`;
 
-    return fetch("http://localhost:8080/users", {
+    return fetch("https://collection-keeper-jhirschi.herokuapp.com/users", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
