@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-mongoose.connect("mongodb://jhirschi:123456a@ds117545.mlab.com:17545/coinsdb", {useNewUrlParser: true});
+mongoose.connect("mongodb://jhirschi:123456a@ds117545.mlab.com:17545/coinsdb", {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set("useCreateIndex", true);
 
 // VALIDATION (https://mongoosejs.com/docs/validation.html)

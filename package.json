@@ -1,15 +1,14 @@
 {
   "name": "cs4200",
   "version": "1.0.0",
-  "description": "",
   "main": "node.js",
   "dependencies": {
-    "bcrypt": "^3.0.5",
-    "body-parser": "^1.18.3",
+    "bcrypt": "^3.0.7",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "express": "^4.16.4",
-    "express-session": "^1.15.6",
-    "mongoose": "^5.4.8",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "mongoose": "^5.7.14",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0"
   },
@@ -21,5 +20,14 @@
     "start": "node server.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justicehirschi/collection_keeper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/justicehirschi/collection_keeper/issues"
+  },
+  "homepage": "https://github.com/justicehirschi/collection_keeper#readme",
+  "description": ""
 }

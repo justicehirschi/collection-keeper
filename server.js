@@ -8,7 +8,11 @@ const session = require("express-session");
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors({credentials: true, origin: "null"})); // https://jhirschi123.github.io if on server
+
+// var corsOrigin = "null" // localhost
+var corsOrigin = "https://justicehirschi.github.io" // heroku server
+
+app.use(cors({credentials: true, origin: `${corsOrigin}`}));
 app.set("port", (process.env.PORT || 8080));
 app.use(express.static("public"));
 
